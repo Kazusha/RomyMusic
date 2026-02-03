@@ -40,32 +40,33 @@ async function getTopMonde() {
 //Affichage HTML pour la fonction top monde 
 function displayPage(startIndex) {
   top_musique.innerHTML = "";
-
   const pageSongs = allSongs.slice(startIndex, startIndex + songsPerPage);
 
   pageSongs.forEach((song, index) => {
+    // La correction est ici : on cherche l'URL de preview dans le tableau link
+    const previewUrl = song.link[1].attributes.href; 
+    const coverImage = song["im:image"][2].label;
+
     const card = document.createElement("div");
-    card.className = `
-      flex flex-col items-center gap-2 
-      bg-white p-4 rounded-lg shadow-md
-      w-40 sm:w-44 md:w-48
-      opacity-0 translate-x-8 transition-all duration-500
-      hover:scale-105 hover:shadow-xl cursor-pointer
-    `;
+    card.className = `flex flex-col items-center gap-2 bg-white p-4 rounded-lg shadow-md w-40 sm:w-44 md:w-48 opacity-0 translate-x-8 transition-all duration-500 hover:scale-105 hover:shadow-xl`;
 
     card.innerHTML = `
-      <img src="${song["im:image"][2].label}" class="w-24 h-24 rounded-lg">
-      <p class="font-semibold text-sm text-center mt-2">${song["im:name"].label}</p>
+      <img src="${coverImage}" class="w-24 h-24 rounded-lg">
+      <p class="font-semibold text-sm text-center mt-2 h-10 overflow-hidden">${song["im:name"].label}</p>
+      <audio controls class="w-full mt-2 h-8">
+          <source src="${previewUrl}" type="audio/mp4">
+      </audio>
     `;
 
     top_musique.appendChild(card);
-
     
     setTimeout(() => {
       card.classList.remove("opacity-0", "translate-x-8");
     }, index * 100);
   });
 }
+
+
 //Animation card 5-5 avec bouton previous 
 const nextBtn = document.getElementById("next");
 const prevBtn = document.getElementById("prev");
