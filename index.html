@@ -4,73 +4,79 @@
   <meta charset="UTF-8">
   <title>RomyMUSIC</title>
   <link rel="stylesheet" href="dist/output.css">
-  <link rel="icon" href="images/logomusique.png" sizes="32x32">
-  <link rel="icon" href="images/logomusique.png" sizes="16x16">
+  <link rel="icon" href="images/headphones.png" sizes="32x32">
+  <link rel="icon" href="images/headphones.png" sizes="16x16">
 </head>
 
-<body class="flex bg-pink-50 min-h-screen">
+<body class="flex bg-gradient-to-r from-pink-50 via-purple-100 to-purple-200 min-h-screen font-sans">
 
-  <aside class="w-64 h-screen border-r-4 border-black p-4 bg-pink-100 flex flex-col justify-between">
+  <aside class="w-64 h-screen border-r-4 border-black p-6 bg-[#1e1e1e] flex flex-col justify-between shadow-lg">
     <div>
-      <a href="#Accueil" class="flex items-center text-xl font-bold gap-3 mb-10">
-        <img src="images/logomusique.png" class="w-12 h-12" alt="Logo">
+      <a href="#Accueil" class="flex items-center text-2xl font-bold gap-3 mb-10 text-[#B23EFF] hover:text-pink-400 transition">
+        <img src="images/headphones.png" class="w-12 h-12" alt="Logo">
         RomyMUSIC
       </a>
 
       <nav aria-label="Menu Principal">
         <ul class="space-y-4">
-          <li><a href="#Accueil" class="nav-link block p-2 rounded transition hover:bg-red-50">Accueil</a></li>
-          <li><a href="#TopMonde/Pays" class="nav-link block p-2 rounded transition hover:bg-red-50">Top Monde</a></li>
-          <li><a href="#Recommandations" class="nav-link block p-2 rounded transition hover:bg-red-50">Recommandations</a></li>
+          <li><a href="#Accueil" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] active:bg-[#B23EFF]/20 transition text-[#B23EFF]  font-medium">Accueil</a></li>
+          <li><a href="#TopMonde/Pays" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-medium">Top Monde</a></li>
+          <li><a href="#Recommandations" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-medium">Recommandations</a></li>
         </ul>
       </nav>
     </div>
 
-    <a href="https://github.com/Kazusha" class="flex items-center gap-3 p-4 hover:bg-red-50 rounded">
-      <p>Soutenez sur GitHub</p>
-      <img src="images/1051377.png" alt="GitHub" class="w-8 h-8">
+    <a href="https://github.com/Kazusha" target="_blank" class="flex items-center gap-3 p-4 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-semibold shadow-md">
+      <img src="images/github.png" alt="GitHub" class="w-8 h-8">
+      Soutenez sur GitHub
     </a>
   </aside>
 
-  <main class="flex-1 p-6 md:p-8">
+  <main class="flex-1 p-8 md:p-10 bg-[#B23EFF]  shadow-inner overflow-x-hidden">
 
-    <section id="Accueil">
-      <div class="flex gap-3 mb-8 mt-2 items-center">
+    <section id="Accueil" class="mb-16">
+      <div class="flex gap-3 items-center">
         <input
           id="rechercher"
           type="text"
-          class="bg-white flex-1 p-3 border-2 border-black rounded shadow"
+          class="flex-1 p-4  shadow-lg border-2 border-[#B23EFF] focus:ring-2 focus:ring-pink-300 focus:outline-none transition"
           placeholder="Rechercher un titre, un artiste, une musique..."
         >
-        <button id="btn-rechercher" class="hover:scale-105 transition">
-          <img src="images/symbole-de-linterface-de-recherche.png" alt="Rechercher" class="w-10 h-10">
+        <button id="btn-rechercher" class="p-3 bg-[#B23EFF] hover:bg-pink-500  shadow-lg transition transform hover:scale-105">
+          <img src="images/symbole-de-linterface-de-recherche.png" alt="Rechercher" class="w-8 h-8">
         </button>
       </div>
+    </section>
 
-      <div class="relative mt-8" id="TopMonde">
-        <h1 class="text-2xl font-bold mb-4">Les Musiques les plus streamées actuellement</h1>
+    <section id="Accueil" class="relative mb-20">
+      <h1 class="text-3xl font-bold mb-6 text-white drop-shadow-lg">Les Musiques les plus streamées actuellement</h1>
 
-        <a id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded shadow z-10 cursor-pointer hover:scale-105 hover:shadow-xl ">
-            <img src="images/precedent.png" class="w-12 h-12">
-        </a>
+      <a id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 cursor-pointer hover:scale-110 transition">
+        <img src="images/precedent.png" class="w-10 h-10">
+      </a>
 
-        <div id="top_musique" class=" ml-8 flex overflow-hidden gap-8">
-        </div>
-
-        <a id="next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded shadow z-10 cursor-pointer hover:scale-105 hover:shadow-xl">
-            <img src="images/bouton-suivant.png" class="w-12 h-12">
-        </a>
+      <div id="top_musique" class="ml-8 flex gap-6 overflow-x-auto scrollbar-hide">
       </div>
 
-      <div class="relative mt-20" id="Recommandations">
-        <h1 class="text-2xl font-bold mb-4">Recommandations</h1>
-<a id="preve" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded shadow z-10">
-            <img src="images/precedent.png" class="w-12 h-12">
-        </a>        <div id="recommandations" class="flex overflow-hidden gap-4 scroll-smooth"></div>
- <a id="nexte" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded shadow z-10">
-            <img src="images/bouton-suivant.png" class="w-12 h-12">
-        </a>      </div>
+      <a id="next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 cursor-pointer hover:scale-110 transition">
+        <img src="images/bouton-suivant.png" class="w-10 h-10">
+      </a>
+      <h1 class="text-3xl font-bold mb-6 text-white drop-shadow-lg">Recommandations</h1>
+
+      <a id="preve" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 cursor-pointer hover:scale-110 transition">
+        <img src="images/precedent.png" class="w-10 h-10">
+      </a>
+
+      <div id="recommandations" class="flex gap-6 overflow-x-auto scrollbar-hide">
+      </div>
+
+      <a id="nexte" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 cursor-pointer hover:scale-110 transition">
+        <img src="images/bouton-suivant.png" class="w-10 h-10">
+      </a>
+    
     </section>
+
+      
 
   </main>
 
