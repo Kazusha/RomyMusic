@@ -2,92 +2,67 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RomyMUSIC</title>
   <link rel="stylesheet" href="dist/output.css">
   <link rel="icon" href="images/headphones.png" sizes="32x32">
   <link rel="icon" href="images/headphones.png" sizes="16x16">
 </head>
-
 <body class="flex bg-gradient-to-r from-pink-50 via-purple-100 to-purple-200 min-h-screen font-sans">
-
-  <aside class="w-64 h-screen border-r-4 border-[#1e1e1e] p-6 bg-[#1e1e1e] flex flex-col justify-between shadow-lg">
+  
+  <!-- Sidebar -->
+  <aside class="w-64 h-screen border-r-4 border-[#1e1e1e] p-6 bg-[#1e1e1e] flex flex-col justify-between shadow-lg fixed">
     <div>
-      <a href="#Accueil" class="flex items-center text-2xl font-bold gap-3 mb-10 text-[#B23EFF] hover:text-pink-400 transition">
+      <a href="#" class="flex items-center text-2xl font-bold gap-3 mb-10 text-[#B23EFF] hover:text-pink-400 transition">
         <img src="images/headphones.png" class="w-12 h-12" alt="Logo">
         RomyMUSIC
       </a>
-
       <nav aria-label="Menu Principal">
         <ul class="space-y-4">
-          <li><a href="#Accueil" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] active:bg-[#B23EFF]/20 transition text-[#B23EFF]  font-medium">Accueil</a></li>
-          <li><a href="#top.html" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-medium">Top Monde</a></li>
-          <li><a href="#recommandations.html" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-medium">Recommandations</a></li>
+          <li>
+            <a href="#" data-page="accueil" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-medium">
+              Accueil
+            </a>
+          </li>
+          <li>
+            <a href="#" data-page="top" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-medium">
+              Top Monde
+            </a>
+          </li>
+          <li>
+            <a href="#" data-page="recommandations" class="nav-link block p-3 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-medium">
+              Recommandations
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
-
     <a href="https://github.com/Kazusha" target="_blank" class="flex items-center gap-3 p-4 rounded-lg hover:bg-[#B23EFF]/20 transition text-[#B23EFF] font-semibold shadow-md">
       <img src="images/github.png" alt="GitHub" class="w-8 h-8">
       Soutenez sur GitHub
     </a>
   </aside>
 
-  <main class="flex-1 p-8 md:p-10 bg-[#B23EFF]  shadow-inner overflow-x-hidden">
-
-   
-
-    <section id="Accueil" class="relative mb-20">
-        <div class="flex gap-3 items-center">
-        <input
-          id="rechercher"
-          type="text"
-          class="flex-1 p-4  shadow-lg border-2 border-[#B23EFF] focus:ring-2 focus:ring-pink-300 focus:outline-none transition"
-          placeholder="Rechercher un titre, un artiste, une musique..."
-        >
-        <button id="btn-rechercher" class="p-3 bg-[#B23EFF] hover:bg-pink-500  shadow-lg transition transform hover:scale-105">
-          <img src="images/symbole-de-linterface-de-recherche.png" alt="Rechercher" class="w-8 h-8">
-        </button>
-      </div>
-      <div class="mt-10">
-        <h1 class="text-3xl font-bold mb-6 text-white drop-shadow-lg">Les Musiques les plus streamées actuellement</h1>
-
-      <a id="prev" class=" bg-[#B23EFF] absolute left-0 top-1/2 -translate-y-1/2 mt-5 p-3 rounded-full shadow-lg z-10 cursor-pointer hover:scale-110 transition">
-        <img src="images/precedent.png" class="w-10 h-10">
-      </a>
-
-      <div id="top_musique" class="ml-8 flex gap-6 overflow-x-auto scrollbar-hide ">
-      </div>
-
-      <a id="next" class=" bg-[#B23EFF] absolute right-0 top-1/2 -translate-y-1/2  mt-5 p-3 rounded-full shadow-lg z-10 cursor-pointer hover:scale-110 transition">
-        <img src="images/bouton-suivant.png" class="w-10 h-10">
-      </a>
-      </div>
-      
-      <div class="mt-10 relative">
-  <h1 class="text-3xl font-bold mb-6 text-white drop-shadow-lg">Recommandations</h1>
-
-  <a id="previous" 
-     class="absolute left-0 top-1/2 -translate-y-1/2 bg-[#B23EFF] p-3 rounded-full shadow-lg z-10 cursor-pointer hover:scale-110 transition">
-    <img src="images/precedent.png" class="w-10 h-10">
-  </a>
-
-  <div id="recommandations" class="flex gap-6 overflow-x-auto scrollbar-hide">
-  </div>
-
-  <a id="nexteoiuws" 
-     class="absolute right-0 top-1/2 -translate-y-1/2 bg-[#B23EFF] p-3 rounded-full shadow-lg z-10 cursor-pointer hover:scale-110 transition">
-    <img src="images/bouton-suivant.png" class="w-10 h-10">
-  </a>
-</div>
-
-     
-    
-    </section>
-
-      
-
+  <!-- Main content avec le player à l'intérieur -->
+ <!-- Main content avec scroll -->
+<div class="flex-1 ml-64 flex flex-col h-screen overflow-hidden">
+  <main id="main-content" class="flex-1 p-8 md:p-10 bg-[#B23EFF] shadow-inner overflow-auto pb-4">
+    <!-- Pages injectées ici -->
   </main>
 
+  <!-- Player sticky en bas -->
+  <div id="music-player" class="bg-[#1e1e1e] p-3 shadow-lg flex items-center gap-4 hidden sticky bottom-0">
+    <img id="player-cover" src="" alt="cover" class="w-16 h-16 rounded-md flex-shrink-0">
+    <div class="flex-1 min-w-0">
+      <p id="player-title" class="text-white font-bold truncate">Titre</p>
+      <p id="player-artist" class="text-gray-400 text-sm truncate">Artiste</p>
+      <audio id="player-audio" class="w-full mt-2" controls></audio>
+    </div>
+    <button id="close-player" class="text-white font-bold text-2xl ml-2 hover:text-red-500 transition">×</button>
+  </div>
+</div>
+
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
