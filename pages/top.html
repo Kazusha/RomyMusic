@@ -1,0 +1,49 @@
+<section id="top" class="space-y-14">
+  <div class="relative gap-6">
+
+    <!-- Recherche -->
+    <div class="p-6">
+      <h2 class="text-2xl font-bold mb-5 text-[#1e1e1e]">
+        Rechercher de la musique
+      </h2>
+
+      <div class="flex gap-4 items-center">
+        <input
+          id="rechercherTop"
+          type="text"
+          class="flex-1 p-4 rounded-xl shadow-lg border-2 border-[#B23EFF] 
+                 focus:outline-none focus:ring-2 focus:ring-[#B23EFF]/40 transition"
+          placeholder="Rechercher un titre, un artiste, une musique..."
+        >
+
+        <button 
+          onclick="searchArtistTOP()"
+          class="bg-[#1e1e1e] text-white px-6 py-4 rounded-lg font-sans hover:bg-[#b23eff] transition shadow-lg"
+        >
+          Rechercher
+        </button>
+      </div>
+
+      <div 
+        id="resultat" 
+        class="mt-6 flex flex-wrap gap-5"
+      ></div>
+    </div>
+<h3 id="genreTitle" class="text-xl font-bold text-[#1e1e1e] mx-16 mb-4">
+  Top 50
+</h3>
+
+    <div class="flex justify-center mr-7 bg-[#1e1e1e] p-8 rounded-2xl shadow-lg">
+      <a id="rap" class="bg-[#B23EFF] cursor-pointer text-white px-6 py-4 rounded-xl font-sans hover:bg-[#b23eff] transition shadow-lg">RAP</a>
+      <a id="pop" class="bg-[#B23EFF] cursor-pointer text-white px-6 py-4 rounded-xl font-sans hover:bg-[#b23eff] transition shadow-lg">POP</a>
+      <a id="rock" class="bg-[#B23EFF] cursor-pointer text-white px-6 py-4 rounded-xl font-sans hover:bg-[#b23eff] transition shadow-lg">ROCK</a>
+      <a id="electro" class="bg-[#B23EFF] cursor-pointer text-white px-6 py-4 rounded-xl font-sans hover:bg-[#b23eff] transition shadow-lg">ELECTRO</a>
+    </div>
+
+    <div 
+      id="top_pargenre"
+      class="mx-16 flex gap-6 overflow-x-auto py-4 scrollbar-hide"
+    ></div>
+
+  </div>
+</section>

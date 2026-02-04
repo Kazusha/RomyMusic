@@ -11,7 +11,7 @@ function loadPage(page) {
       main.innerHTML = html;
 
       if(page === "accueil") initAccueil();
-      if(page === "top") initTopMondePage();
+      if(page === "top") initTop();
       if(page === "recommandations") initRecommandationsPage();
 
       // Lien actif
@@ -176,175 +176,123 @@ function initAccueil() {
     }
   }
 
-  // ===== RECOMMANDATIONS (TOP ARTISTES) =====
-  const recommandations = document.getElementById("recommandations");
-  const prevBtnReco = document.getElementById("previous");
-  const nextBtnReco = document.getElementById("nexteoiuws");
-
-  const artistes = [
-    { name: "Artist 1", img: "images/artist1.jpg" },
-    { name: "Artist 2", img: "images/artist2.jpg" },
-    { name: "Artist 3", img: "images/artist3.jpg" },
-    { name: "Artist 4", img: "images/artist4.jpg" },
-    { name: "Artist 5", img: "images/artist5.jpg" },
-    { name: "Artist 6", img: "images/artist6.jpg" },
-  ];
-
-  let currentIndexReco = 0;
-  const perPageReco = 4;
-
-  function displayArtists(startIndex) {
-    recommandations.innerHTML = "";
-    const pageArtists = artistes.slice(startIndex, startIndex + perPageReco);
-
-    pageArtists.forEach((art) => {
-      const card = document.createElement("div");
-      card.className = `flex flex-col items-center gap-2 bg-[#1e1e1e] p-4 shadow-md w-40 sm:w-44 md:w-48 hover:scale-105 hover:shadow-xl transition`;
-      card.innerHTML = `
-        <img src="${art.img}" class="w-32 h-32 rounded-lg">
-        <p class="font-sans text-white text-sm text-center mt-2 h-10 overflow-hidden">${art.name}</p>
-      `;
-      recommandations.appendChild(card);
-    });
-  }
-
-  nextBtnReco.addEventListener("click", () => {
-    if(currentIndexReco + perPageReco < artistes.length){
-      currentIndexReco += perPageReco;
-      displayArtists(currentIndexReco);
-    }
-  });
-
-  prevBtnReco.addEventListener("click", () => {
-    if(currentIndexReco - perPageReco >= 0){
-      currentIndexReco -= perPageReco;
-      displayArtists(currentIndexReco);
-    }
-  });
-
-  displayArtists(currentIndexReco);
+ 
 }
 
 // ================================
 // Top Monde (page séparée)
 // ================================
-function initTopMondePage() {
-  const top_musique = document.getElementById("top_musique");
-  const prevBtn = document.getElementById("prev");
-  const nextBtn = document.getElementById("next");
 
-  let allSongs = [];
-  let currentIndex = 0;
-  const songsPerPage = 5;
+function initTop() {
+  const searchInputTOP = document.getElementById("rechercherTop");
+  const resultat = document.getElementById("resultat");
 
-  async function getTopMonde() {
-    const url = "https://itunes.apple.com/us/rss/topsongs/limit=50/json";
+  window.searchArtistTOP = async function () {
+    const query1 = searchInputTOP.value;
+    if (!query1) return;
+
+    resultat.innerHTML = "<p class='text-white animate-pulse'>Recherche en cours...</p>";
+
     try {
-      const response = await fetch(url);
-      const data = await response.json();
-      allSongs = data.feed.entry;
-      displayPage(currentIndex);
-    } catch (error) {
-      top_musique.innerHTML = "<p class='text-red-500'>Impossible de charger le Top Monde</p>";
-    }
-  }
+      const url1 = `https://itunes.apple.com/search?term=${encodeURIComponent(query1)}&entity=song&limit=20&country=fr`;
+      const response1 = await fetch(url1);
+      const data1 = await response1.json();
+      resultat.innerHTML = "";
 
-  function displayPage(startIndex) {
-    top_musique.innerHTML = "";
-    const pageSongs = allSongs.slice(startIndex, startIndex + songsPerPage);
+      if (data1.results.length === 0) {
+        resultat.innerHTML = "<p class='text-white'>Aucun résultat trouvé.</p>";
+        return;
+      }
 
-    pageSongs.forEach((song, index) => {
-      const previewUrl = song.link[1].attributes.href; 
-      const coverImage = song["im:image"][2].label;
+      data1.results.forEach(track => {
+        const cover = track.artworkUrl100.replace("100x100","300x300");
 
-      const card = document.createElement("div");
-      card.className = `flex flex-col items-center gap-2 bg-[#1e1e1e] p-4 shadow-md w-40 sm:w-44 md:w-48 opacity-0 translate-x-8 transition-all duration-500 hover:scale-105 hover:shadow-xl`;
+        const card = document.createElement("div");
+        card.className = "bg-[#2a2a2a] p-4 rounded-xl w-48 flex flex-col items-center gap-3 shadow-lg";
 
-      card.innerHTML = `
-        <img src="${coverImage}" class="w-32 h-32">
-        <p class="font-sans text-white text-sm text-center mt-2 h-10 overflow-hidden">${song["im:name"].label}</p>
-        <button class="play-btn bg-[#B23EFF] text-white px-2 py-1 rounded">Play</button>
-      `;
+        card.innerHTML = `
+          <img src="${cover}" class="w-36 h-36 rounded-lg">
+          <p class="text-white font-bold text-sm truncate">${track.trackName}</p>
+          <p class="text-gray-400 text-xs truncate">${track.artistName}</p>
+          <button class="play-btn bg-[#B23EFF] text-white px-2 py-1 rounded">Play</button>
+        `;
 
-      card.querySelector(".play-btn").addEventListener("click", () => {
-        playSong({
-          cover: coverImage,
-          title: song["im:name"].label,
-          artist: song["im:artist"].label,
-          preview: previewUrl
+        card.querySelector(".play-btn").addEventListener("click", () => {
+          playSong({
+            cover,
+            title: track.trackName,
+            artist: track.artistName,
+            preview: track.previewUrl
+          });
         });
+
+        resultat.appendChild(card);
       });
 
-      top_musique.appendChild(card);
-      setTimeout(() => card.classList.remove("opacity-0", "translate-x-8"), index*100);
-    });
-  }
-
-  nextBtn.addEventListener("click", () => {
-    if(currentIndex + songsPerPage < allSongs.length){
-      currentIndex += songsPerPage;
-      displayPage(currentIndex);
+    } catch {
+      resultat.innerHTML = "<p class='text-red-500'>Erreur de connexion.</p>";
     }
-  });
+  };
+  const rap = document.getElementById("rap");
+const pop = document.getElementById("pop");
+const rock = document.getElementById("rock");
+const electro = document.getElementById("electro");
 
-  prevBtn.addEventListener("click", () => {
-    if(currentIndex - songsPerPage >= 0){
-      currentIndex -= songsPerPage;
-      displayPage(currentIndex);
-    }
-  });
-
-  getTopMonde();
+rap.onclick = () => top_genre("rap");
+pop.onclick = () => top_genre("pop");
+rock.onclick = () => top_genre("rock");
+electro.onclick = () => top_genre("electro");
 }
 
-// ================================
-// Recommandations (page séparée)
-// ================================
-function initRecommandationsPage() {
-  const recommandations = document.getElementById("recommandations");
-  const prevBtn = document.getElementById("previous");
-  const nextBtn = document.getElementById("nexteoiuws");
+async function top_genre(genre) {
+  const genre_term = {
+    rap: "rap",
+    pop: "pop",
+    rock: "rock",
+    electro: "electronic"
+  };
 
-  const artistes = [
-    { name: "Artist 1", img: "images/artist1.jpg" },
-    { name: "Artist 2", img: "images/artist2.jpg" },
-    { name: "Artist 3", img: "images/artist3.jpg" },
-    { name: "Artist 4", img: "images/artist4.jpg" },
-    { name: "Artist 5", img: "images/artist5.jpg" },
-    { name: "Artist 6", img: "images/artist6.jpg" },
-  ];
+  const container = document.getElementById("top_pargenre");
+  const title = document.getElementById("genreTitle");
 
-  let currentIndex = 0;
-  const perPage = 4;
+  title.textContent = `Top 50 ${genre.toUpperCase()}`;
+  container.innerHTML = "";
 
-  function displayArtists(startIndex) {
-    recommandations.innerHTML = "";
-    const pageArtists = artistes.slice(startIndex, startIndex + perPage);
+  const term = genre_term[genre];
 
-    pageArtists.forEach((art) => {
-      const card = document.createElement("div");
-      card.className = `flex flex-col items-center gap-2 bg-[#1e1e1e] p-4 shadow-md w-40 sm:w-44 md:w-48 hover:scale-105 hover:shadow-xl transition`;
-      card.innerHTML = `
-        <img src="${art.img}" class="w-32 h-32 rounded-lg">
-        <p class="font-sans text-white text-sm text-center mt-2 h-10 overflow-hidden">${art.name}</p>
-      `;
-      recommandations.appendChild(card);
+  const res = await fetch(
+    `https://itunes.apple.com/search?term=${term}&media=music&entity=song&limit=50`
+  );
+  const data = await res.json();
+
+  data.results.forEach((track, index) => {
+    const cover = track.artworkUrl100.replace("100x100","300x300");
+
+    const card = document.createElement("div");
+    card.className =
+      "min-w-[200px] bg-[#2a2a2a] rounded-xl p-4 shadow-lg hover:scale-105 transition";
+
+    card.innerHTML = `
+      <p class="text-white font-bold mb-1">#${index + 1}</p>
+      <img src="${cover}" class="w-36 h-36 rounded-lg shadow-md">
+      <div class="text-center w-full">
+        <p class="text-white font-bold text-sm truncate">${track.trackName}</p>
+        <p class="text-gray-400 text-xs truncate">${track.artistName}</p>
+      </div>
+      <button class="play-btn bg-[#B23EFF] text-white px-2 py-1 rounded">Play</button>
+    `;
+
+    card.querySelector(".play-btn").addEventListener("click", () => {
+      playSong({
+        cover,
+        title: track.trackName,
+        artist: track.artistName,
+        preview: track.previewUrl
+      });
     });
-  }
 
-  nextBtn.addEventListener("click", () => {
-    if(currentIndex + perPage < artistes.length){
-      currentIndex += perPage;
-      displayArtists(currentIndex);
-    }
+    container.appendChild(card);
   });
-
-  prevBtn.addEventListener("click", () => {
-    if(currentIndex - perPage >= 0){
-      currentIndex -= perPage;
-      displayArtists(currentIndex);
-    }
-  });
-
-  displayArtists(currentIndex);
 }
+
+initTop();

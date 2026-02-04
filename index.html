@@ -10,7 +10,6 @@
 </head>
 <body class="flex bg-gradient-to-r from-pink-50 via-purple-100 to-purple-200 min-h-screen font-sans">
   
-  <!-- Sidebar -->
   <aside class="w-64 h-screen border-r-4 border-[#1e1e1e] p-6 bg-[#1e1e1e] flex flex-col justify-between shadow-lg fixed">
     <div>
       <a href="#" class="flex items-center text-2xl font-bold gap-3 mb-10 text-[#B23EFF] hover:text-pink-400 transition">
@@ -43,14 +42,11 @@
     </a>
   </aside>
 
-  <!-- Main content avec le player à l'intérieur -->
- <!-- Main content avec scroll -->
+ 
 <div class="flex-1 ml-64 flex flex-col h-screen overflow-hidden">
   <main id="main-content" class="flex-1 p-8 md:p-10 bg-[#B23EFF] shadow-inner overflow-auto pb-4">
-    <!-- Pages injectées ici -->
   </main>
 
-  <!-- Player sticky en bas -->
   <div id="music-player" class="bg-[#1e1e1e] p-3 shadow-lg flex items-center gap-4 hidden sticky bottom-0">
     <img id="player-cover" src="" alt="cover" class="w-16 h-16 rounded-md flex-shrink-0">
     <div class="flex-1 min-w-0">
@@ -62,7 +58,6 @@
   </div>
 </div>
 
-  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
